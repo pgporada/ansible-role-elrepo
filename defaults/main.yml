@@ -1,0 +1,8 @@
+---
+elrepo_pkg: elrepo-release
+elrepo_rel: "{{ ansible_distribution_major_version }}"
+elrepo_repos:
+  elrepo: False
+  elrepo_extras: False
+  elrepo_kernel: False
+  elrepo_testing: False

@@ -1,0 +1,86 @@
+### Name: ELRepo.org Community Enterprise Linux Repository for el{{ elrepo_rel }}
+### URL: http://elrepo.org/
+
+[elrepo]
+name=ELRepo.org Community Enterprise Linux Repository - el{{ elrepo_rel }}
+baseurl=http://elrepo.org/linux/elrepo/el{{ elrepo_rel }}/$basearch/
+	http://mirrors.coreix.net/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
+	http://jur-linux.org/download/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
+	http://repos.lax-noc.com/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
+	http://mirror.ventraip.net.au/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
+mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo.el{{ elrepo_rel }}
+{% if elrepo_repos.elrepo is defined %}
+{%   if elrepo_repos.elrepo %}
+enabled=1
+{%   else %}
+enabled=0
+{%   endif %}
+{% else %}
+enabled=0
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+
+[elrepo-testing]
+name=ELRepo.org Community Enterprise Linux Testing Repository - el{{ elrepo_rel }}
+baseurl=http://elrepo.org/linux/testing/el{{ elrepo_rel }}/$basearch/
+	http://mirrors.coreix.net/elrepo/testing/el{{ elrepo_rel }}/$basearch/
+	http://jur-linux.org/download/elrepo/testing/el{{ elrepo_rel }}/$basearch/
+	http://repos.lax-noc.com/elrepo/testing/el{{ elrepo_rel }}/$basearch/
+	http://mirror.ventraip.net.au/elrepo/testing/el{{ elrepo_rel }}/$basearch/
+mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-testing.el{{ elrepo_rel }}
+{% if elrepo_repos.elrepo_testing is defined %}
+{%   if elrepo_repos.elrepo_testing %}
+enabled=1
+{%   else %}
+enabled=0
+{%   endif %}
+{% else %}
+enabled=0
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+
+[elrepo-kernel]
+name=ELRepo.org Community Enterprise Linux Kernel Repository - el{{ elrepo_rel }}
+baseurl=http://elrepo.org/linux/kernel/el{{ elrepo_rel }}/$basearch/
+	http://mirrors.coreix.net/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
+	http://jur-linux.org/download/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
+	http://repos.lax-noc.com/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
+	http://mirror.ventraip.net.au/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
+mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-kernel.el{{ elrepo_rel }}
+{% if elrepo_repos.elrepo_kernel is defined %}
+{%   if elrepo_repos.elrepo_kernel %}
+enabled=1
+{%   else %}
+enabled=0
+{%   endif %}
+{% else %}
+enabled=0
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
+
+[elrepo-extras]
+name=ELRepo.org Community Enterprise Linux Extras Repository - el{{ elrepo_rel }}
+baseurl=http://elrepo.org/linux/extras/el{{ elrepo_rel }}/$basearch/
+	http://mirrors.coreix.net/elrepo/extras/el{{ elrepo_rel }}/$basearch/
+	http://jur-linux.org/download/elrepo/extras/el{{ elrepo_rel }}/$basearch/
+	http://repos.lax-noc.com/elrepo/extras/el{{ elrepo_rel }}/$basearch/
+	http://mirror.ventraip.net.au/elrepo/extras/el{{ elrepo_rel }}/$basearch/
+mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-extras.el{{ elrepo_rel }}
+{% if elrepo_repos.elrepo_extras is defined %}
+{%   if elrepo_repos.elrepo_extras %}
+enabled=1
+{%   else %}
+enabled=0
+{%   endif %}
+{% else %}
+enabled=0
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
+protect=0
