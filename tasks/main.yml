@@ -23,7 +23,12 @@
   set_fact:
     elrepo_ver: "5-5.el5"
   when: elrepo_rel == '5'
- 
+
+- name: Acquire the ELRepo GPG key
+  rpm_key:
+    state: present
+    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
 - name: Execute mktemp
   tags: elrepo-release
   command: mktemp -u --suffix .rpm
@@ -31,7 +36,7 @@
 
 - name: Create temporary package
   tags: elrepo-release
-  get_url: url=http://www.elrepo.org/{{ elrepo_pkg }}-{{ elrepo_ver }}.elrepo.noarch.rpm   
+  get_url: url=https://www.elrepo.org/{{ elrepo_pkg }}-{{ elrepo_ver }}.elrepo.noarch.rpm
            dest={{ elrepo_mktemp.stdout }}
   register: elrepo_get_url
   when: elrepo_mktemp|success
@@ -60,3 +65,4 @@
   when:
     - elrepo_mktemp|success
     - elrepo_yum|success
+...
