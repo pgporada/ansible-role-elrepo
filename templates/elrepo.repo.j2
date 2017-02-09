@@ -9,15 +9,7 @@ baseurl=http://elrepo.org/linux/elrepo/el{{ elrepo_rel }}/$basearch/
 	http://repos.lax-noc.com/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
 	http://mirror.ventraip.net.au/elrepo/elrepo/el{{ elrepo_rel }}/$basearch/
 mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo.el{{ elrepo_rel }}
-{% if elrepo_repos.elrepo is defined %}
-{%   if elrepo_repos.elrepo %}
-enabled=1
-{%   else %}
-enabled=0
-{%   endif %}
-{% else %}
-enabled=0
-{% endif %}
+enabled={{ 1 if elrepo_repos.elrepo is defined and elrepo_repos.elrepo else 0 }}
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
 protect=0
@@ -30,15 +22,7 @@ baseurl=http://elrepo.org/linux/testing/el{{ elrepo_rel }}/$basearch/
 	http://repos.lax-noc.com/elrepo/testing/el{{ elrepo_rel }}/$basearch/
 	http://mirror.ventraip.net.au/elrepo/testing/el{{ elrepo_rel }}/$basearch/
 mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-testing.el{{ elrepo_rel }}
-{% if elrepo_repos.elrepo_testing is defined %}
-{%   if elrepo_repos.elrepo_testing %}
-enabled=1
-{%   else %}
-enabled=0
-{%   endif %}
-{% else %}
-enabled=0
-{% endif %}
+enabled={{ 1 if elrepo_repos.elrepo_testing is defined and elrepo_repos.elrepo_testing else 0 }}
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
 protect=0
@@ -51,15 +35,7 @@ baseurl=http://elrepo.org/linux/kernel/el{{ elrepo_rel }}/$basearch/
 	http://repos.lax-noc.com/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
 	http://mirror.ventraip.net.au/elrepo/kernel/el{{ elrepo_rel }}/$basearch/
 mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-kernel.el{{ elrepo_rel }}
-{% if elrepo_repos.elrepo_kernel is defined %}
-{%   if elrepo_repos.elrepo_kernel %}
-enabled=1
-{%   else %}
-enabled=0
-{%   endif %}
-{% else %}
-enabled=0
-{% endif %}
+enabled={{ 1 if elrepo_repos.elrepo_kernel is defined and elrepo_repos.elrepo_kernel else 0 }}
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
 protect=0
@@ -72,15 +48,7 @@ baseurl=http://elrepo.org/linux/extras/el{{ elrepo_rel }}/$basearch/
 	http://repos.lax-noc.com/elrepo/extras/el{{ elrepo_rel }}/$basearch/
 	http://mirror.ventraip.net.au/elrepo/extras/el{{ elrepo_rel }}/$basearch/
 mirrorlist=http://mirrors.elrepo.org/mirrors-elrepo-extras.el{{ elrepo_rel }}
-{% if elrepo_repos.elrepo_extras is defined %}
-{%   if elrepo_repos.elrepo_extras %}
-enabled=1
-{%   else %}
-enabled=0
-{%   endif %}
-{% else %}
-enabled=0
-{% endif %}
+enabled={{ 1 if elrepo_repos.elrepo_extras is defined and elrepo_repos.elrepo_extras else 0 }}
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-elrepo.org
 protect=0
