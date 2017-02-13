@@ -1,0 +1,68 @@
+---
+- name: Assert that prerequisites exist
+  tags: elrepo-release
+  assert:
+    that:
+      - elrepo_pkg is defined
+      - elrepo_rel is defined
+
+- name: Set elrepo_ver fact (el7)
+  tags: elrepo-release
+  set_fact:
+    elrepo_ver: "7.0-2.el7"
+  when: elrepo_rel == '7'
+
+- name: Set elrepo_ver fact (el6)
+  tags: elrepo-release
+  set_fact:
+    elrepo_ver: "6-6.el6"
+  when: elrepo_rel == '6'
+
+- name: Set elrepo_ver fact (el5)
+  tags: elrepo-release
+  set_fact:
+    elrepo_ver: "5-5.el5"
+  when: elrepo_rel == '5'
+
+- name: Acquire the ELRepo GPG key
+  rpm_key:
+    state: present
+    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+- name: Execute mktemp
+  tags: elrepo-release
+  command: mktemp -u --suffix .rpm
+  register: elrepo_mktemp
+
+- name: Create temporary package
+  tags: elrepo-release
+  get_url: url=https://www.elrepo.org/{{ elrepo_pkg }}-{{ elrepo_ver }}.elrepo.noarch.rpm
+           dest={{ elrepo_mktemp.stdout }}
+  register: elrepo_get_url
+  when: elrepo_mktemp|success
+
+- name: Install elrepo-release
+  tags: elrepo-release
+  yum: name={{ item }}
+      state=present
+  register: elrepo_yum
+  with_items: "{{ elrepo_mktemp.stdout }}"
+  when: elrepo_get_url|success
+
+- name: Configure elrepo.repo
+  tags: elrepo-release
+  template: src=elrepo.repo.j2
+            dest=/etc/yum.repos.d/elrepo.repo
+            owner=root
+            group=root
+            mode=0644
+  when: elrepo_yum|success
+
+- name: Erase temporary package
+  tags: elrepo-release
+  file: path={{ elrepo_mktemp.stdout }}
+        state=absent
+  when:
+    - elrepo_mktemp|success
+    - elrepo_yum|success
+...

@@ -1,0 +1,62 @@
+---
+- name: Remove old kernel packages
+  become: true
+  become_method: sudo
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - kernel-devel
+    - kernel-tools
+    - kernel-tools-libs
+    - kernel-headers
+    - kernel
+
+- name: Install new kernel packages
+  become: true
+  become_method: sudo
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "kernel-{{ elrepo_version }}-devel"
+    - "kernel-{{ elrepo_version }}tools"
+    - "kernel-{{ elrepo_version }}-tools-libs"
+    - "kernel-{{ elrepo_version }}-headers"
+    - "kernel-{{ elrepo_version }}"
+
+- name: Install packages that were initially removed
+  become: true
+  become_method: sudo
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - dkms
+    - gcc
+    - redhat-lsb-languages
+
+- name: Create a new /boot/grub2/grub.cfg for the elrepo kernel
+  become: true
+  become_method: sudo
+  shell: "grub2-mkconfig -o /boot/grub2/grub.cfg"
+
+- name: Fix permissions on the newly created /boot/grub2/grub.cfg
+  become: true
+  become_method: sudo
+  shell: "chmod 0600 /boot/grub2/grub.cfg"
+
+- name: Set the default kernel grub is going to boot (elrepo)
+  become: true
+  become_method: sudo
+  shell: "grub2-set-default 0"
+
+# http://stackoverflow.com/questions/29955605/how-to-reboot-centos-7-with-ansible
+- name: Restart server
+  become: true
+  become_method: sudo
+  command: /sbin/shutdown -r +1
+  async: 0
+  poll: 0
+  ignore_errors: true
+...
