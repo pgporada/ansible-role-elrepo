@@ -10,7 +10,6 @@
     - kernel-tools
     - kernel-tools-libs
     - kernel-headers
-    - kernel
 
 - name: Install new kernel packages
   become: true
