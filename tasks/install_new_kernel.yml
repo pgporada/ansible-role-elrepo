@@ -18,11 +18,11 @@
     name: "{{ item }}"
     state: present
   with_items:
+    - "kernel-{{ elrepo_version }}"
     - "kernel-{{ elrepo_version }}-devel"
-    - "kernel-{{ elrepo_version }}tools"
+    - "kernel-{{ elrepo_version }}-tools"
     - "kernel-{{ elrepo_version }}-tools-libs"
     - "kernel-{{ elrepo_version }}-headers"
-    - "kernel-{{ elrepo_version }}"
 
 - name: Install packages that were initially removed
   become: true
